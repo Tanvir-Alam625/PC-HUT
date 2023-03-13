@@ -1,10 +1,15 @@
 import React from "react";
 import { BiListPlus } from "react-icons/bi";
 import { useDispatch } from "react-redux";
+import ReactStars from "react-stars";
 import { addToCard } from "../redux/actionCreators/actionCreator";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch()
+
+  const ratingChanged = (newRating) => {
+    console.log(newRating)
+  }
   return (
     <div
       className='shadow-lg rounded-3xl border  p-3 flex flex-col text-indigo-900'
@@ -13,12 +18,21 @@ const ProductCard = ({ product }) => {
       <div className='h-52 w-52 mx-auto'>
         <img src={product.image} alt={product.model} />
       </div>
-      <h1 className='font-bold text-center'>{product.model}</h1>
-      <p className='text-center font-semibold mb-3'>Rating: {product.rating}</p>
+      <h1 className='font-bold text-sm'>{product.model}</h1>
+      <p className='text-center font-semibold mb-3'>
+        <ReactStars
+        count={5}
+        size={20}
+        onChange={ratingChanged}
+        color2={'#ffd700'}
+        value={product.rating}
+        edit={false}
+        />
+      </p>
       <div className=' flex-1'>
         <ul className='space-y-2'>
           {product.keyFeature.map((feature, index) => {
-            return <li key={index} className='text-sm '>{feature}</li>;
+            return <li key={index} className='text-xs font-medium text-slate-700'>{feature}</li>;
           })}
         </ul>
       </div>
